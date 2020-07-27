@@ -11,7 +11,7 @@ body {
 header {
   min-height: 4rem;
   color: white;
-  background-color: cadetblue;
+  background-color: cornflowerblue;
 }
 header h1 {
   margin: 0;
@@ -30,7 +30,7 @@ footer {
   place-items: center;
   min-height: 4rem;
   margin-top: 8rem;
-  background-color: cadetblue;
+  background-color: cornflowerblue;
   color: white;
   font-size: 80%;
   text-align: center;

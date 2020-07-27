@@ -20,5 +20,6 @@
     "peacock.color": "#5dc9e2",
     "editor.tabSize": 2,
     "editor.formatOnSave": true,
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "prettier.singleQuote": true
 }
