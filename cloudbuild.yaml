@@ -21,4 +21,4 @@ steps:
       - 'managed'
 
 images:
-  - 'gcr.io/$PROJECT_ID/github_cloudrun-words:$COMMIT_SHA'
+  - 'gcr.io/$PROJECT_ID/cloudrun-words:$COMMIT_SHA'
