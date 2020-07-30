@@ -18,13 +18,13 @@
     "cors": "2.8.5",
     "express": "4.17.1",
     "knex": "0.21.2",
-    "mysql": "2.18.1",
-    "react": "16.13.1",
-    "react-dom": "16.13.1"
+    "mysql": "2.18.1"
   },
   "devDependencies": {
     "dotenv": "8.2.0",
     "nodemon": "2.0.4",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
     "parcel-bundler": "1.12.4"
   },
   "browserslist": [
