@@ -4,10 +4,12 @@ Parcelでasync/awaitを使うためには、package.jsonに
 を追記する必要があるので注意。
 */
 
-const API_URL = 'http://localhost:8080';
+const config = {
+  API_URL: process.env.WORDS_API_URL || 'http://localhost:8080',
+};
 
 async function executeApi(path, method = 'get', body = undefined) {
-  const response = await fetch(`${API_URL}${path}`, {
+  const response = await fetch(`${config.API_URL}${path}`, {
     method,
     mode: 'cors',
     cache: 'no-cache',
