@@ -8,6 +8,7 @@ const { Translate } = require('@google-cloud/translate').v2;
 const translateClient = new Translate();
 
 const knex = require('./database');
+const auth = require('./auth-middleware');
 
 app.use(express.static(path.join(__dirname, '../public')));
 app.use(bodyParser.json());
@@ -38,14 +39,20 @@ function escaptHtml(str) {
 }
 
 // 単語一覧
-app.get('/words', async (req, res) => {
-  const words = await knex.select('*').from('words').orderBy('id');
+app.get('/words', auth, async (req, res) => {
+  const userId = req.userId;
+  const words = await knex
+    .select('*')
+    .from('words')
+    .where({ user_id: userId })
+    .orderBy('id');
   res.json({ status: 'ok', data: [...words] });
 });
 
 // 単語追加
-app.post('/words', async (req, res) => {
-  const word = { ...req.body, done: 0 };
+app.post('/words', auth, async (req, res) => {
+  const userId = req.userId;
+  const word = { ...req.body, done: 0, user_id: userId };
   if (word.id !== undefined && word.id !== 0) {
     res.status(400);
     res.json({ status: 'error', data: 'Invalid id' });
@@ -61,7 +68,8 @@ app.post('/words', async (req, res) => {
 });
 
 // 単語更新
-app.put('/words/:id', async (req, res) => {
+app.put('/words/:id', auth, async (req, res) => {
+  const userId = req.userId;
   const id = req.params.id | 0;
   const word = { ...req.body };
   if (id === undefined || id === 0 || id !== word.id) {
@@ -72,13 +80,14 @@ app.put('/words/:id', async (req, res) => {
   console.log(JSON.stringify(word));
 
   delete word.id;
-  await knex('words').where({ id }).update(word, ['id']);
+  await knex('words').where({ id, user_id: userId }).update(word, ['id']);
   const savedRows = await knex.select('*').from('words').where({ id });
   res.json({ status: 'ok', data: savedRows[0] });
 });
 
 // 単語更新（doneフラグのみ）
-app.put('/words/:id/done', async (req, res) => {
+app.put('/words/:id/done', auth, async (req, res) => {
+  const userId = req.userId;
   const id = req.params.id | 0;
   const word = { ...req.body };
   if (id === undefined || id === 0 || id !== word.id) {
@@ -88,21 +97,24 @@ app.put('/words/:id/done', async (req, res) => {
   }
   console.log(JSON.stringify(word));
 
-  await knex('words').where({ id }).update({ done: word.done }, ['id']);
+  await knex('words')
+    .where({ id, user_id: userId })
+    .update({ done: word.done }, ['id']);
   const savedRows = await knex.select('*').from('words').where({ id });
   res.json({ status: 'ok', data: savedRows[0] });
 });
 
 // 単語削除
-app.delete('/words/:id', async (req, res) => {
+app.delete('/words/:id', auth, async (req, res) => {
+  const userId = req.userId;
   const id = req.params.id | 0;
-  const rows = await knex('words').where({ id }).del();
+  const rows = await knex('words').where({ id, user_id: userId }).del();
   console.log({ rows });
   res.json({ status: 'ok', data: { deletedRows: rows } });
 });
 
 // 3ヶ国語自動翻訳
-app.get('/translate/:from/:word', async (req, res) => {
+app.get('/translate/:from/:word', auth, async (req, res) => {
   const langs = ['ja', 'en', 'es', 'fr'];
   const data = {
     [req.params.from]: req.params.word,

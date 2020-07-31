@@ -17,3 +17,10 @@ INSERT INTO `words`.`words` (`ja`, `en`, `es`, `fr`, `done`) VALUES
 INSERT INTO `words`.`words` (`ja`, `en`, `es`, `fr`, `done`) VALUES 
 	('自転車', 'bicycle', 'bicicleta', "vélo", 0);
 
+
+# ADD user_id column
+ALTER TABLE `words`.`words` 
+ADD COLUMN `user_id` VARCHAR(100) NULL AFTER `done`,
+ADD INDEX `idx_user_id` (`user_id` ASC);
+
+

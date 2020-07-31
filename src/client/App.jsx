@@ -1,17 +1,24 @@
 import React, { useEffect, useState } from 'react';
+import { useAuthState } from './auth-state';
 import { getWords } from './api';
+import { Header } from './Header';
+import { Footer } from './Footer';
 import { WordList } from './WordList';
 import { WordInput } from './WordInput';
 import { WordCheck } from './WordCheck';
 
 export const App = () => {
+  const [authState] = useAuthState();
   const [screen, setScreen] = useState('list');
   const [words, setWords] = useState([]);
   const [currentWord, setCurrentWord] = useState(null);
 
+  console.log(authState);
+  const { isSignedIn, idToken, userName } = authState;
+
   useEffect(() => {
     refreshWords();
-  }, []);
+  }, [idToken]);
 
   const currentIndex = findIndexById(currentWord?.id);
 
@@ -21,7 +28,9 @@ export const App = () => {
   }
 
   async function refreshWords(id = undefined) {
-    const words = await getWords();
+    if (!isSignedIn) return;
+
+    const words = await getWords(idToken);
     setWords(words);
 
     const index = findIndexById(id);
@@ -45,6 +54,8 @@ export const App = () => {
   }
 
   const props = {
+    isSignedIn,
+    idToken,
     words,
     currentIndex,
     currentWord,
@@ -57,11 +68,31 @@ export const App = () => {
     isLast: currentIndex >= words.length - 1,
   };
 
+  if (!isSignedIn) {
+    return (
+      <>
+        <Header />
+        <main>
+          {isSignedIn === undefined ? (
+            <div>読み込んでいます...</div>
+          ) : (
+            <div>Googleアカウントでログインしてください。</div>
+          )}
+        </main>
+        <Footer />
+      </>
+    );
+  }
+
   return (
-    <div>
-      {screen === 'list' && <WordList {...props} />}
-      {screen === 'input' && <WordInput {...props} />}
-      {screen === 'check' && <WordCheck {...props} />}
-    </div>
+    <>
+      <Header userName={userName} />
+      <main>
+        {screen === 'list' && <WordList {...props} />}
+        {screen === 'input' && <WordInput {...props} />}
+        {screen === 'check' && <WordCheck {...props} />}
+      </main>
+      <Footer />
+    </>
   );
 };

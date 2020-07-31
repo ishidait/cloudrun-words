@@ -12,12 +12,11 @@ export function WordCheck({
   nextWord,
   isFirst,
   isLast,
+  idToken,
 }) {
   async function handleDone() {
     const word = { ...currentWord, done: currentWord.done ? 0 : 1 };
-    const result = await updateDone(word);
-    console.log({ result });
-
+    await updateDone(idToken, word);
     await refreshWords(currentWord.id);
   }
 

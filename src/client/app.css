@@ -8,14 +8,27 @@ body {
   font-size: 16px;
 }
 
-header {
+.app-header {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
   min-height: 4rem;
   color: white;
   background-color: cornflowerblue;
 }
-header h1 {
+.app-header h1 {
   margin: 0;
   padding: 0.4rem 1rem 0;
+}
+.app-header .username {
+  display: inline-block;
+  padding: 0 1rem;
+}
+.app-header .sign-in,
+.app-header .sign-out {
+  display: inline-block;
+  padding: 0 1rem;
+  cursor: pointer;
 }
 
 main {

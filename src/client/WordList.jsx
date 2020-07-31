@@ -2,12 +2,18 @@ import React, { useEffect } from 'react';
 import { deleteWord } from './api';
 import { WordListItem } from './WordListItem';
 
-export function WordList({ words, setScreen, setCurrentWord, refreshWords }) {
+export function WordList({
+  words,
+  setScreen,
+  setCurrentWord,
+  refreshWords,
+  idToken,
+}) {
   useEffect(() => {
     if (words.length === 0) {
       refreshWords();
     }
-  }, []);
+  }, [idToken]);
 
   function handleInput() {
     setCurrentWord(null);
@@ -31,7 +37,7 @@ export function WordList({ words, setScreen, setCurrentWord, refreshWords }) {
     e.preventDefault();
     if (!confirm('削除しますか?')) return;
     const id = e.target.dataset.id | 0;
-    const result = await deleteWord(id);
+    const result = await deleteWord(idToken, id);
     console.log({ result });
     await refreshWords();
   }

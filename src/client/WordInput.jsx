@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { languageList } from './constants';
 import { translate, saveWord, validate } from './api';
 
-export function WordInput({ setScreen, currentWord, refreshWords }) {
+export function WordInput({ setScreen, currentWord, refreshWords, idToken }) {
   const [wordState, setWordState] = useState(() => {
     const initialState = {
       id: currentWord ? currentWord.id : undefined,
@@ -32,7 +32,7 @@ export function WordInput({ setScreen, currentWord, refreshWords }) {
     const value = wordState[lang];
     if (!value) return;
 
-    const result = await translate(lang, value);
+    const result = await translate(idToken, lang, value);
     const w = {
       ...wordState,
       ...result,
@@ -43,7 +43,7 @@ export function WordInput({ setScreen, currentWord, refreshWords }) {
   async function handleSave() {
     const word = { ...wordState };
     try {
-      const result = await saveWord(word);
+      const result = await saveWord(idToken, word);
       console.log({ result });
       refreshWords();
       setScreen('list');
