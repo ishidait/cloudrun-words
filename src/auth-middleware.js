@@ -25,16 +25,15 @@ function sendAuthError(res) {
 
 async function auth(req, res, next) {
   const authHeader = req.get('Authorization');
-  if (!authHeader) return sendAuthError();
+  if (!authHeader) return sendAuthError(res);
 
   const idToken = authHeader.split(' ')[1];
-  if (!idToken) return sendAuthError();
+  if (!idToken) return sendAuthError(res);
 
   const userId = await verify(idToken);
-  if (!userId) return sendAuthError();
+  if (!userId) return sendAuthError(res);
 
   req.userId = userId;
-
   next();
 }
 
