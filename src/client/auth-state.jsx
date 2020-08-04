@@ -10,9 +10,7 @@ function authReducer(state, action) {
     case 'SIGN_IN': {
       const user = action.payload.user;
       const authResponse = user.getAuthResponse();
-      console.log({ authResponse });
       const profile = action.payload.user.getBasicProfile();
-      console.log({ profile });
 
       return {
         ...state,

@@ -43,11 +43,11 @@ export function WordInput({ setScreen, currentWord, refreshWords, idToken }) {
   async function handleSave() {
     const word = { ...wordState };
     try {
-      const result = await saveWord(idToken, word);
-      console.log({ result });
+      await saveWord(idToken, word);
       refreshWords();
       setScreen('list');
     } catch (err) {
+      console.error(err);
       alert(err.message);
     }
   }

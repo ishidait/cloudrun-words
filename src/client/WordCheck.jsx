@@ -16,8 +16,13 @@ export function WordCheck({
 }) {
   async function handleDone() {
     const word = { ...currentWord, done: currentWord.done ? 0 : 1 };
-    await updateDone(idToken, word);
-    await refreshWords(currentWord.id);
+    try {
+      await updateDone(idToken, word);
+      await refreshWords(currentWord.id);
+    } catch (err) {
+      console.error(err);
+      alert(err.message);
+    }
   }
 
   function handleBack() {

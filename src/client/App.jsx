@@ -9,12 +9,11 @@ import { WordCheck } from './WordCheck';
 
 export const App = () => {
   const [authState] = useAuthState();
+  const { isSignedIn, idToken, userName } = authState;
+
   const [screen, setScreen] = useState('list');
   const [words, setWords] = useState([]);
   const [currentWord, setCurrentWord] = useState(null);
-
-  console.log(authState);
-  const { isSignedIn, idToken, userName } = authState;
 
   useEffect(() => {
     refreshWords();
