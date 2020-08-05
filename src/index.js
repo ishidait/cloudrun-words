@@ -39,7 +39,6 @@ function escaptHtml(str) {
 }
 
 function noCache(req, res, next) {
-  res.set('Vary', 'Authorization');
   res.set('Cache-Control', 'no-store');
   next();
 }
