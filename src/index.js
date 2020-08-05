@@ -38,8 +38,14 @@ function escaptHtml(str) {
   return str.replace(/[&<>]/g, (tag) => tagsToReplace[tag] || tag);
 }
 
+function noCache(req, res, next) {
+  res.set('Vary', 'Authorization');
+  res.set('Cache-Control', 'no-store');
+  next();
+}
+
 // 単語一覧
-app.get('/words', auth, async (req, res) => {
+app.get('/words', auth, noCache, async (req, res) => {
   const userId = req.userId;
   const words = await knex
     .select('*')
@@ -47,7 +53,6 @@ app.get('/words', auth, async (req, res) => {
     .where({ user_id: userId })
     .orderBy('id');
 
-  res.set('Cache-Control', 'no-store');
   res.json({ status: 'ok', data: [...words] });
 });
 
