@@ -46,6 +46,8 @@ app.get('/words', auth, async (req, res) => {
     .from('words')
     .where({ user_id: userId })
     .orderBy('id');
+
+  res.set('Cache-Control', 'no-store');
   res.json({ status: 'ok', data: [...words] });
 });
 

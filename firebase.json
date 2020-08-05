@@ -4,21 +4,14 @@
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
-        "source": "/hello",
+        "source": "/words{,/**}",
         "run": {
           "serviceId": "words-app",
           "region": "us-west1"
         }
       },
       {
-        "source": "/words",
-        "run": {
-          "serviceId": "words-app",
-          "region": "us-west1"
-        }
-      },
-      {
-        "source": "/translate",
+        "source": "/translate/**",
         "run": {
           "serviceId": "words-app",
           "region": "us-west1"
