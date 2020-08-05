@@ -11,7 +11,7 @@ CREATE TABLE `words`.`words` (
 
 
 INSERT INTO `words`.`words` (`ja`, `en`, `es`, `fr`, `done`) VALUES 
-	(`今日`, `today`, `hoy`, `aujourd'hui`, 1);
+	('今日', 'today', 'hoy', "aujourd'hui", 1);
 INSERT INTO `words`.`words` (`ja`, `en`, `es`, `fr`, `done`) VALUES 
 	('明日', 'tomorrow', 'mañana', "demain", 0);
 INSERT INTO `words`.`words` (`ja`, `en`, `es`, `fr`, `done`) VALUES 
