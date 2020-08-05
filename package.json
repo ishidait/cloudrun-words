@@ -4,8 +4,8 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "dev:client": "env -u WORDS_API_URL parcel src/client/index.html",
-    "build:client": "rm -rf public && parcel build -d public src/client/index.html",
+    "dev:client": "NODE_ENV=development parcel src/client/index.html",
+    "build:client": "rm -rf public && NODE_ENV=production parcel build -d public src/client/index.html",
     "dev": "nodemon -r dotenv/config src/index.js",
     "start": "node src/index.js"
   },

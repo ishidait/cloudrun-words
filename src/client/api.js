@@ -5,7 +5,10 @@ Parcelでasync/awaitを使うためには、package.jsonに
 */
 
 const config = {
-  API_URL: process.env.WORDS_API_URL || 'http://localhost:8080',
+  API_URL:
+    process.env.NODE_ENV === 'development'
+      ? 'http://localhost:8080'
+      : process.env.WORDS_API_URL,
 };
 
 async function executeApi(path, { method = 'get', body, idToken }) {

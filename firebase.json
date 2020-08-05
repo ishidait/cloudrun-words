@@ -1,0 +1,33 @@
+{
+  "hosting": {
+    "public": "public",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      {
+        "source": "/hello",
+        "run": {
+          "serviceId": "words-app",
+          "region": "us-west1"
+        }
+      },
+      {
+        "source": "/words",
+        "run": {
+          "serviceId": "words-app",
+          "region": "us-west1"
+        }
+      },
+      {
+        "source": "/translate",
+        "run": {
+          "serviceId": "words-app",
+          "region": "us-west1"
+        }
+      },
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
