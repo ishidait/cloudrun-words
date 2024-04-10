@@ -13,7 +13,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@google-cloud/translate": "7.2.2",
+    "@google-cloud/translate": "8.2.0",
     "body-parser": "1.19.0",
     "cors": "2.8.5",
     "express": "4.19.2",
