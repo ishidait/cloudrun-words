@@ -16,7 +16,7 @@
     "@google-cloud/translate": "8.2.0",
     "body-parser": "1.19.0",
     "cors": "2.8.5",
-    "express": "4.19.2",
+    "express": "4.20.0",
     "google-auth-library": "6.0.6",
     "knex": "2.4.0",
     "mysql": "2.18.1"
